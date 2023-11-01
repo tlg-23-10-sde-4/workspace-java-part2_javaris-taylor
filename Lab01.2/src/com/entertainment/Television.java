@@ -68,7 +68,7 @@ public class Television {
                boolean result = false;
 
                // proceed only if 'obj' is really referencing a Television object
-                if(obj instanceof Television) {
+                if(this.getClass() ==  obj.getClass()) {
                         // safely downcast 'obj' to more specefic reference Television
                         Television other =  (Television) obj;
 
