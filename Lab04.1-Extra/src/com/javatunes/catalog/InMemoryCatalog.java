@@ -136,13 +136,7 @@ public class InMemoryCatalog implements Catalog {
      * TASK: how many items of the specified genre (MusicCategory) do we sell?
      */
     public int numberInGenre(MusicCategory category) {
-        Collection<MusicItem> results = new ArrayList<>();
-        for(MusicItem item : catalogData) {
-            if(item.getMusicCategory().equals(category)) {
-                results.add(item);
-            }
-        }
-        return results.size();
+        return findByCategory(category).size();
     }
 
     /**
