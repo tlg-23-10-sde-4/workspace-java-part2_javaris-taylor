@@ -15,6 +15,18 @@ package com.javatunes.billing;
  *  
  * TODO: implement this algorithm.
  */
-public class EuropeTax {
+public class EuropeTax implements TaxCalculator{
 
+    private static double VAT = .17;
+    private static double LUX = .25;
+    private static double LUX_THRESH = 100.0;
+
+    @Override
+    public double taxAmount(double taxable) {
+        double result = taxable * VAT;
+        if(taxable > LUX_THRESH) {
+            result += (taxable - LUX_THRESH) * LUX;
+        }
+        return result;
+    }
 }
