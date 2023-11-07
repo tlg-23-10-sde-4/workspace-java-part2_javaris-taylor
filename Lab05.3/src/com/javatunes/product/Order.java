@@ -8,15 +8,28 @@
  */
 package com.javatunes.product;
 
+import com.javatunes.billing.*;
+
 import java.util.Collection;
 
 public class Order {
+
   private String id;
-  
-  public Order(String id) {
+  private double cartTotal;
+  private final Location location;
+
+  public Order(String id, Location location) {
     this.id = id;
+    this.location = location;
   }
-  
+
+
+
+  public double getTax() {
+    double tax = 0.0;
+    TaxCalculator calc = TaxCalculatorFactory.getTaxCalculator(getLocation());
+    return calc.taxAmount(getCartTotal());
+  }
   /**
    * DONE:
    * get the items from the cart and iterate over them, print each item's product code
@@ -29,9 +42,18 @@ public class Order {
     for (Product product : cartItems) {
       System.out.println(product.getCode());
     }
-    System.out.println("Order Total: " + cart.total());
+    cartTotal = cart.total();
+    System.out.println("Order Total: " + getCartTotal());
   }
-  
+
+  public double getCartTotal() {
+    return cartTotal;
+  }
+
+  public Location getLocation() {
+    return location;
+  }
+
   public String getId() {
     return id;
   }
