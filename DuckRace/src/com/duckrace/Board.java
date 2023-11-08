@@ -38,7 +38,7 @@ import java.util.*;
  *   17       17    Dom        1    DEBIT_CARD
  */
 
-class Board {
+public class Board {
     private final Map<Integer,String> studentIdMap = loadStudentIdMap();
     private final Map<Integer,DuckRacer> racerMap  = new TreeMap<>();
 
@@ -58,13 +58,20 @@ class Board {
     }
 
     // TESTING PURPOSES ONLY
-    void showResults() {
-        System.out.println(racerMap);
-        Collection<DuckRacer> racers = racerMap.values();
-        System.out.println("id\t name\t wins\t rewards");
-        for(DuckRacer racer : racers) {
-            System.out.format("%s\t%s    %s\t%s\n",racer.getId(), racer.getName(), racer.getWins(), racer.getRewards());
+    public void showResults() {
+
+        if(racerMap.isEmpty()) {
+            System.out.println("+ + + + + + + + + + + + + + + + + + + + +");
+            System.out.println("YOU NEED RACERS FOR RESULTS, WIN FIRST");
+            System.out.println("+ + + + + + + + + + + + + + + + + + + + +");
+        }
+        else{
+            Collection<DuckRacer> racers = racerMap.values();
+            System.out.println("id\t name\t wins\t rewards");
+            for(DuckRacer racer : racers) {
+                System.out.format("%s\t%s    %s\t%s\n",racer.getId(), racer.getName(), racer.getWins(), racer.getRewards());
 //            System.out.println(racer);
+            }
         }
     }
 
@@ -81,7 +88,7 @@ class Board {
 
         // read all lines from conf/student-ids.csv into a List<String>
         try {
-            List<String> lines = Files.readAllLines(Path.of("conf/student-ids.csv"));
+            List<String> lines = Files.readAllLines(Path.of("DuckRace/conf/student-ids.csv"));
 
             for(String line : lines) {
                 String[] tokens = line.split(","); // tokens [0] is "1", tokens[1] "Aaron"
