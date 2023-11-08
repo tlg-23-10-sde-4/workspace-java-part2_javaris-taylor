@@ -8,6 +8,7 @@
  */
 package com.entertainment;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Television
@@ -19,7 +20,7 @@ implements Comparable<Television> {
   
   private String brand;
   private int volume;
-  private DisplayType display;
+  private Television.DisplayType display;
   private Tuner tuner = new Tuner();  // set up internally and used for channel management
   
   public Television() {
@@ -118,5 +119,42 @@ implements Comparable<Television> {
                Objects.equals(this.getDisplay(), other.getDisplay());
     }
     return result;
+  }
+
+  // STATIC NESTED CLASSES HERE
+  public static enum DisplayType {
+    LCD, LED, OLED, PLASMA, CRT
+  }
+  public static class ChannelComparator implements Comparator<Television> {
+
+    @Override
+    public int compare(Television tv1, Television tv2) {
+      return Integer.compare(tv1.getCurrentChannel(), tv2.getCurrentChannel());
+    }
+  }
+  public static class BrandChannelComparator
+          implements Comparator<Television> {
+
+    @Override
+    public int compare(Television tv1, Television tv2) {
+      int result = tv1.getBrand().compareTo(tv2.getBrand());
+
+      if (result == 0) {
+        result = Integer.compare(tv1.getCurrentChannel(), tv2.getCurrentChannel());
+      }
+      return result;
+    }
+  }
+
+  // NAMED MEMBER LEVEL INNER CLASSES
+  private class Tuner {
+    private int channel = 3;  // default channel for cable and satellite customers
+
+    public int getChannel() {
+      return this.channel;
+    }
+    public void setChannel(int channel) {
+      this.channel = channel;
+    }
   }
 }
