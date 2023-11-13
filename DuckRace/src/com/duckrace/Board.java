@@ -1,6 +1,6 @@
 package com.duckrace;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -38,9 +38,38 @@ import java.util.*;
  *   17       17    Dom        1    DEBIT_CARD
  */
 
-public class Board {
+public class Board implements Serializable {
+    private static final String dataFilePath = "data/board.dat";
+
+    // If data/board.dat exists, read that file into a Board object and return it.
+    // Otherwise, return a new Board().
+    public static Board getInstance() {
+
+        Board board = null;
+
+        if(Files.exists(Path.of(dataFilePath))) {
+            try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
+                board = (Board) in.readObject();
+            }
+            catch(Exception e) {
+
+            }
+        }
+        else {
+            board = new Board();
+        }
+        return board;
+    }
+
+
     private final Map<Integer,String> studentIdMap = loadStudentIdMap();
     private final Map<Integer,DuckRacer> racerMap  = new TreeMap<>();
+
+    private Board() {
+
+    }
+
+
 
     /*
      * Updates the board (racerMap) by making a DuckRacer "win"
@@ -55,6 +84,20 @@ public class Board {
             racerMap.put(id, racer);
         }
         racerWin(reward, racer);
+        save();
+    }
+
+    /*
+     * Writes *this* Board object to binary file data/board.dat
+     * Uses built-in Java ojbect serialization facility.
+     */
+    private void save() {
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dataFilePath))) {
+        out.writeObject(this);
+        }
+        catch(Exception e) {
+
+        }
     }
 
     // TESTING PURPOSES ONLY
@@ -88,7 +131,7 @@ public class Board {
 
         // read all lines from conf/student-ids.csv into a List<String>
         try {
-            List<String> lines = Files.readAllLines(Path.of("DuckRace/conf/student-ids.csv"));
+            List<String> lines = Files.readAllLines(Path.of("conf/student-ids.csv"));
 
             for(String line : lines) {
                 String[] tokens = line.split(","); // tokens [0] is "1", tokens[1] "Aaron"
