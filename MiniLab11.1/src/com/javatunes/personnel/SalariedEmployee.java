@@ -9,9 +9,7 @@ package com.javatunes.personnel;
 
 import java.time.LocalDate;
 
-public class SalariedEmployee
-extends Employee
-implements Runnable {
+public class SalariedEmployee extends Employee implements Runnable {
   private Double salary;
   
   public SalariedEmployee(String name, LocalDate hireDate) {
