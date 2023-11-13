@@ -10,8 +10,7 @@ package com.javatunes.compare;
 
 import java.util.Comparator;
 
-public class StringLengthComparator
-implements Comparator<String> {
+public class StringLengthComparator implements Comparator<String> {
 
   /*
    * The contract for Comparator is as follows:
@@ -27,6 +26,6 @@ implements Comparator<String> {
    */
   @Override
   public int compare(String str1, String str2) {
-    return str1.length() - str2.length();
+    return Integer.compare(str1.length(), str2.length());
   }
 }

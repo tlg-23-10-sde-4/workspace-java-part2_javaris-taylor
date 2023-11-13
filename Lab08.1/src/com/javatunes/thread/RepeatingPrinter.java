@@ -8,8 +8,7 @@
  */
 package com.javatunes.thread;
 
-public class RepeatingPrinter
-implements Runnable {
+public class RepeatingPrinter implements Runnable {
 
   @Override
   public void run() {
