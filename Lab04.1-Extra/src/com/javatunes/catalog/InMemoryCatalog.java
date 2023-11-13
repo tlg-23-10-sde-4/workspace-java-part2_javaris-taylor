@@ -10,6 +10,7 @@ package com.javatunes.catalog;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 // OF COURSE THIS CLASS DOESN'T COMPILE
 // Your first job is to fulfill the contract that this class has signed.
@@ -107,13 +108,9 @@ public class InMemoryCatalog implements Catalog {
      */
 
     public Collection<MusicItem> findSelfTitled() {
-        Collection<MusicItem> matched = new ArrayList<>();
-        for(MusicItem item : catalogData) {
-            if(item.getTitle().equals(item.getArtist())) {
-                matched.add(item);
-            }
-        }
-        return matched;
+        return catalogData.stream()
+                .filter(item -> item.getTitle().equals(item.getArtist()))
+                .collect(Collectors.toList());
     }
 
 
