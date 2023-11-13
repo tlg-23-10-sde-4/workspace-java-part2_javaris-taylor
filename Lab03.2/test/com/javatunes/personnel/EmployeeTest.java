@@ -13,8 +13,22 @@ public class EmployeeTest {
 
     @Before
     public void setUp() {
-        emp1 = new SalariedEmployee("Mary Lou", Date.valueOf("1999-01-02"));
-        emp2 = new SalariedEmployee("Mary Lou", Date.valueOf("1999-01-02"));
+//        emp1 = new DummyEmployee("Mary Lou", Date.valueOf("1999-01-02"));
+//        emp2 = new DummyEmployee("Mary Lou", Date.valueOf("1999-01-02"));
+        emp1 = new Employee("Mary Lou", Date.valueOf("1999-01-02")) {
+            @Override
+            public double pay() {  return 0;
+            }
+            @Override
+            public double payTaxes() { return 0; }
+        };
+        emp2 = new Employee("Mary Lou", Date.valueOf("1999-01-02")) {
+            @Override
+            public double pay() {  return 0;
+            }
+            @Override
+            public double payTaxes() { return 0; }
+        };
     }
 
     @Test
@@ -39,4 +53,12 @@ public class EmployeeTest {
         assertEquals(emp1, emp2);
     }
 
+    // NAMED, MEMBER-
+    private class DummyEmployee extends Employee {
+        public DummyEmployee(String name, Date hireDate) {
+        }
+
+        public double pay() {return 0;}
+        public double payTaxes() {return 0;}
+    }
 }
